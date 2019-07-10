@@ -2,10 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './main.js',
+  entry: './src/js/react-main.js',
   output: {
-    path: path.join(__dirname, '/bundle'),
-    filename: 'index_bundle.js'
+    path: path.resolve(__dirname, 'build'),
+    publicPath: './',
+    filename: 'bundle.js'
   },
   devServer: {
     inline: true,
@@ -20,12 +21,17 @@ module.exports = {
         query: {
           presets: ['@babel/preset-env', '@babel/preset-react']
         }
-      }
+      }, {
+        test: /\.(s*)css$/,
+        use: ['style-loader','css-loader']
+       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html'
+      title: 'Grimoire',
+      template: './src/template/index.html',
+      filename: './index.html'
     })
   ]
 };
