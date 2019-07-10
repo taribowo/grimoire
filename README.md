@@ -1,2 +1,2 @@
-# manga-reader
+# grimoire
 Manga Reader for Windows using ElectronJS
