@@ -10,16 +10,14 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       devTools: true
-    },
-    // frame: false,
-    backgroundColor: '#FFF'
+    }
   });
 
   win.removeMenu();
 
   // win.maximize();
 
-  win.loadFile(path.resolve(__dirname,'build/index.html'));
+  win.loadFile(path.resolve(__dirname, 'build/index.html'));
 
   win.webContents.openDevTools();
 
