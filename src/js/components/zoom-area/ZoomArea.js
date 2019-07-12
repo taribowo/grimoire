@@ -1,32 +1,35 @@
 import React from 'react';
-import { Decimal } from 'decimal.js';
 import ZoomButton from './ZoomButton';
 import ZoomLevel from './ZoomLevel';
-
-let decimalStep = new Decimal(0.1);
+import { zoomIn, zoomOut } from '../../zoom';
 
 class ZoomArea extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { zoomLevel: 1, displayZoomLevel: '100%' };
+    this.state = { zoomLevel: 1, zoomLevelDisplay: '100%' };
   }
 
   zoomIn = () => {
-    let currentZoomLevel = new Decimal(this.state.zoomLevel);
-    let nextZoomLevel = currentZoomLevel.add(decimalStep);
+    let nextZoom = zoomIn(this.state.zoomLevel);
     this.setState({
-      zoomLevel: nextZoomLevel.toNumber(),
-      displayZoomLevel: nextZoomLevel.mul(100).toNumber() + '%'
+      zoomLevel: nextZoom.nextZoomLevel,
+      zoomLevelDisplay: nextZoom.nextZoomLevelDisplay
     });
   };
 
   zoomOut = () => {
-    let currentZoomLevel = new Decimal(this.state.zoomLevel);
-    let nextZoomLevel = currentZoomLevel.minus(decimalStep);
+    let nextZoom = zoomOut(this.state.zoomLevel);
     this.setState({
-      zoomLevel: nextZoomLevel.toNumber(),
-      displayZoomLevel: nextZoomLevel.mul(100).toNumber() + '%'
+      zoomLevel: nextZoom.nextZoomLevel,
+      zoomLevelDisplay: nextZoom.nextZoomLevelDisplay
+    });
+  };
+
+  changeZoomLevel = nextZoomLevel => {
+    this.setState({
+      zoomLevel: nextZoomLevel.actual,
+      zoomLevelDisplay: nextZoomLevel.display
     });
   };
 
@@ -34,7 +37,7 @@ class ZoomArea extends React.Component {
     return (
       <div className='btn-group'>
         <ZoomButton icon='minus' changeZoomLevel={this.zoomOut} />
-        <ZoomLevel zoomLevel={this.state.displayZoomLevel} />
+        <ZoomLevel zoomLevel={this.state.zoomLevelDisplay} changeZoomLevel={this.changeZoomLevel} />
         <ZoomButton icon='plus' changeZoomLevel={this.zoomIn} />
       </div>
     );

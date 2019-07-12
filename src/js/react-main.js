@@ -12,4 +12,5 @@ import 'jquery';
 import 'popper.js';
 import 'bootstrap';
 
+library.add(faPlus, faMinus);
 ReactDOM.render(<App />, document.getElementById('app'));
