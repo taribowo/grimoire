@@ -8,7 +8,24 @@
     "react-start": "webpack-dev-server --mode development --hot",
     "react-build": "webpack --mode production",
     "preelectron-start": "webpack --mode production",
-    "electron-start": "electron ."
+    "electron-start": "electron .",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "io.github.taribowo.grimoire",
+    "productName": "Grimoire",
+    "files": [
+      "./build/*",
+      "./main.js"
+    ],
+    "nsis": {
+      "artifactName": "Grimoire.setup.${version}.${ext}",
+      "uninstallDisplayName": "Grimoire"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    }
   },
   "repository": {
     "type": "git",

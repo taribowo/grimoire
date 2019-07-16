@@ -19,8 +19,7 @@ const template = [
         label: 'Open',
         click: () =>
           dialog.showOpenDialog(win, openMenuOptions, filePaths => {
-            // image.appendImages(filePaths[0]);
-            console.log(filePaths);
+            win.webContents.send('DIR_OPENED', filePaths);
           })
       }
     ]
@@ -42,11 +41,11 @@ function createWindow() {
 
   // win.removeMenu();
 
-  // win.maximize();
+  win.maximize();
 
   win.loadFile(path.resolve(__dirname, 'build/index.html'));
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   win.on('closed', () => {
     win = null;
