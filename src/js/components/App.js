@@ -1,5 +1,5 @@
 import React from 'react';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, webFrame } from 'electron';
 
 import Toolbar from './Toolbar';
 import Pages from './pages/Pages';
@@ -15,12 +15,16 @@ class App extends React.Component {
 
   componentDidMount() {
     ipcRenderer.on('DIR_OPENED', (event, message) => {
-      this.setState({
-        zoomLevel: 1,
-        zoomLevelDisplay: '100%',
-        prevZoomLevel: 1,
-        dirPath: message
-      });
+      webFrame.clearCache();
+      this.setState(
+        {
+          zoomLevel: 1,
+          zoomLevelDisplay: '100%',
+          prevZoomLevel: 1,
+          dirPath: message
+        },
+        () => window.scrollTo(0, 0)
+      );
     });
   }
 

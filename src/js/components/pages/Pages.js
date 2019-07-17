@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 // import { addAllImagesPath } from '../image';
-import { ipcRenderer } from 'electron';
+import { webFrame } from 'electron';
 
 import Images from './Images';
 
@@ -17,15 +17,7 @@ class Pages extends React.Component {
     };
   }
 
-  componentDidMount() {
-    // ipcRenderer.on('DIR_OPENED', (event, message) => {
-    // this.setState({ imagesPath: addAllImagesPath(this.props.dirPath), images: [], imagesWidth: [], imagesLoaded: [] }, this.imageHaventLoaded);
-    // });
-  }
-
   componentDidUpdate(prevProp, prevState) {
-    // if (this.props.dirPath != prevProp.dirPath) {
-    // }
     if (this.props.dirPath != prevProp.dirPath) {
       this.setState({ imagesPath: addAllImagesPath(this.props.dirPath), images: [], imagesWidth: [], imagesLoaded: [] }, this.imageHaventLoaded);
     } else {
@@ -36,6 +28,7 @@ class Pages extends React.Component {
   }
 
   allImageLoaded = () => {
+    webFrame.clearCache();
     let imagesLoaded = [...this.state.imagesLoaded];
     let allImagesLoaded = true;
     for (let imageLoaded of imagesLoaded) {
