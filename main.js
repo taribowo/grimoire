@@ -36,20 +36,20 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       devTools: true
-    }
+    },
+    show: false
   });
-
-  // win.removeMenu();
-
-  win.maximize();
 
   win.loadFile(path.resolve(__dirname, 'build/index.html'));
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   win.on('closed', () => {
     win = null;
   });
+
+  win.maximize();
+  win.show();
 }
 
 app.on('ready', createWindow);

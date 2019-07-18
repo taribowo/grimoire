@@ -20,7 +20,7 @@ class App extends React.Component {
         {
           zoomLevel: 1,
           zoomLevelDisplay: '100%',
-          prevZoomLevel: 1,
+          // prevZoomLevel: 1,
           dirPath: message
         },
         () => window.scrollTo(0, 0)
@@ -28,36 +28,30 @@ class App extends React.Component {
     });
   }
 
-  // componentDidUpdate(prevState) {
-  //   if(this.state.dirPath != prevState.dirPath) {
-  //     thi
-  //   }
-  // }
-
   zoomIn = () => {
-    let prevZoomLevel = this.state.zoomLevel;
+    // let prevZoomLevel = this.state.zoomLevel;
     let nextZoom = zoomIn(this.state.zoomLevel);
     this.setState({
-      prevZoomLevel: prevZoomLevel,
+      // prevZoomLevel: prevZoomLevel,
       zoomLevel: nextZoom.nextZoomLevel,
       zoomLevelDisplay: nextZoom.nextZoomLevelDisplay
     });
   };
 
   zoomOut = () => {
-    let prevZoomLevel = this.state.zoomLevel;
+    // let prevZoomLevel = this.state.zoomLevel;
     let nextZoom = zoomOut(this.state.zoomLevel);
     this.setState({
-      prevZoomLevel: prevZoomLevel,
+      // prevZoomLevel: prevZoomLevel,
       zoomLevel: nextZoom.nextZoomLevel,
       zoomLevelDisplay: nextZoom.nextZoomLevelDisplay
     });
   };
 
   changeZoomLevel = nextZoomLevel => {
-    let prevZoomLevel = this.state.zoomLevel;
+    // let prevZoomLevel = this.state.zoomLevel;
     this.setState({
-      prevZoomLevel: prevZoomLevel,
+      // prevZoomLevel: prevZoomLevel,
       zoomLevel: nextZoomLevel.actual,
       zoomLevelDisplay: nextZoomLevel.display
     });
