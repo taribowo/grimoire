@@ -36,7 +36,7 @@ function ZoomLevel(props) {
   return (
     <div className='btn-group'>
       <button
-        className='btn btn-info btn-sm dropdown-toggle navbar-dropdown'
+        className='btn btn-info btn-xs dropdown-toggle navbar-dropdown'
         type='button'
         id='zoomLevel'
         data-toggle='dropdown'

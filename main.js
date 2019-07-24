@@ -1,33 +1,7 @@
-const { app, BrowserWindow, Menu, dialog } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
 let win;
-
-let openMenuOptions = {
-  title: 'Open Directory',
-  // defaultPath: '/home/aribowo/Pictures',
-  buttonLabel: 'Open',
-  // filters: [{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }],
-  properties: ['openDirectory']
-};
-
-const template = [
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'Open',
-        click: () =>
-          dialog.showOpenDialog(win, openMenuOptions, filePaths => {
-            win.webContents.send('DIR_OPENED', filePaths);
-          })
-      }
-    ]
-  }
-];
-
-const menu = Menu.buildFromTemplate(template);
-Menu.setApplicationMenu(menu);
 
 function createWindow() {
   win = new BrowserWindow({
@@ -41,6 +15,8 @@ function createWindow() {
   });
 
   win.loadFile(path.resolve(__dirname, 'build/index.html'));
+
+  win.removeMenu();
 
   // win.webContents.openDevTools();
 

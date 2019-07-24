@@ -29,30 +29,25 @@ module.exports = {
           ]
         }
       },
-      // {
-      //   test: /\.(s*)css$/,
-      //   use: ['style-loader', 'css-loader']
-      // },
       {
         test: /\.(scss)$/,
         use: [
           {
-            loader: 'style-loader' // inject CSS to page
+            loader: 'style-loader'
           },
           {
-            loader: 'css-loader' // translates CSS into CommonJS modules
+            loader: 'css-loader'
           },
           {
-            loader: 'postcss-loader', // Run postcss actions
+            loader: 'postcss-loader',
             options: {
               plugins: function() {
-                // postcss plugins, can be exported to postcss.config.js
                 return [require('autoprefixer')];
               }
             }
           },
           {
-            loader: 'sass-loader' // compiles Sass to CSS
+            loader: 'sass-loader'
           }
         ]
       }
