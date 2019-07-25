@@ -5,6 +5,8 @@ import { webFrame } from 'electron';
 
 import ViewportImage from './ViewportImage';
 
+import naturalCompare from '../../sort';
+
 class Pages extends React.Component {
   constructor(props) {
     super(props);
@@ -15,7 +17,10 @@ class Pages extends React.Component {
 
   componentDidUpdate(prevProp) {
     if (this.props.dirPath != prevProp.dirPath) {
-      this.setState({ imagesPath: addAllImagesPath(this.props.dirPath) });
+      let imagesPath = addAllImagesPath(this.props.dirPath);
+      imagesPath.sort(naturalCompare);
+
+      this.setState({ imagesPath: imagesPath });
     }
   }
 

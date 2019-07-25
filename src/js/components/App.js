@@ -1,5 +1,6 @@
 import React from 'react';
 import { webFrame, remote } from 'electron';
+import Mousetrap from 'mousetrap';
 
 import Toolbar from './Toolbar';
 import Pages from './pages/Pages';
@@ -19,20 +20,23 @@ const dialog = remote.dialog;
 class App extends React.Component {
   constructor(props) {
     super(props);
+    Mousetrap.bind('ctrl+o', this.openFolder);
     this.state = { zoomLevel: 1, zoomLevelDisplay: '100%', prevZoomLevel: 1, dirPath: '' };
   }
 
   openFolder = () => {
     dialog.showOpenDialog(win, openMenuOptions, dirPath => {
-      webFrame.clearCache();
-      this.setState(
-        {
-          zoomLevel: 1,
-          zoomLevelDisplay: '100%',
-          dirPath: dirPath
-        },
-        () => window.scrollTo(0, 0)
-      );
+      if (!typeof something === 'undefined') {
+        webFrame.clearCache();
+        this.setState(
+          {
+            zoomLevel: 1,
+            zoomLevelDisplay: '100%',
+            dirPath: dirPath
+          },
+          () => window.scrollTo(0, 0)
+        );
+      }
     });
   };
 
