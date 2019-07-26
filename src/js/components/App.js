@@ -26,7 +26,7 @@ class App extends React.Component {
 
   openFolder = () => {
     dialog.showOpenDialog(win, openMenuOptions, dirPath => {
-      if (!typeof something === 'undefined') {
+      if (dirPath) {
         webFrame.clearCache();
         this.setState(
           {
