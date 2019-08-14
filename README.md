@@ -2,7 +2,8 @@
 Manga Reader for Windows using ElectronJS and React
 
 ## Installation
-Run the Grimoire.setup.<version>.exe
+1. Download the latest installer version from the [releases page](https://github.com/taribowo/grimoire/releases)
+2. Run the Grimoire.setup.<version>.exe
   
 ## Features
 1. Read mangas/comics/any images from a directory as a long strip
