@@ -3,8 +3,6 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 
-import './styles/scss/main.scss';
-
 import grimoire from './state-handling/reducers';
 
 import App from './components/App';

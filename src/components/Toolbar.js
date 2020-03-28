@@ -1,12 +1,13 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { webFrame, remote } from 'electron';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { increment, decrement, isMinZoom, isMaxZoom } from '../util/zoom';
-import { INCREMENT_ZOOM, DECREMENT_ZOOM, CHANGE_ZOOM, OPEN_DIR } from '../state-handling/actions';
+import { getAllImagesPath } from '../util/image';
+import { naturalCompare } from '../util/sort';
+import { INCREMENT_ZOOM, DECREMENT_ZOOM, CHANGE_ZOOM, OPEN_DIR, SET_DIR_CONTENT } from '../state-handling/actions';
 
 const zoomLevelOptions = [
   { actual: 2, display: '200%' },
@@ -31,6 +32,7 @@ const zoomLevelOptions = [
   { actual: 0.1, display: '10%' }
 ];
 
+const { webFrame, remote } = window.require('electron');
 const currentWindow = remote.getCurrentWindow();
 const dialog = remote.dialog;
 
@@ -38,8 +40,6 @@ const Toolbar = () => {
   const zoom = useSelector(state => state.zoomLevel.actual);
   const display = useSelector(state => state.zoomLevel.display);
   const dispatch = useDispatch();
-
-  // const inputFile = useRef(null);
 
   const plus = () => {
     const nextZoomLevel = increment(zoom);
@@ -61,22 +61,17 @@ const Toolbar = () => {
       buttonLabel: 'Open',
       properties: ['openDirectory']
     };
+    const directory = dialog.showOpenDialogSync(currentWindow, options);
+    if (typeof directory !== 'undefined') {
+      const content = getAllImagesPath(directory);
+      content.sort(naturalCompare);
 
-    dialog.showOpenDialog(currentWindow, options, directory => {
-      if (directory) {
-        webFrame.clearCache();
-        dispatch({ type: CHANGE_ZOOM, zoom: { actual: 1, display: '100%' } });
-        dispatch({ type: OPEN_DIR, directory });
-        // this.setState(
-        //   {
-        //     zoomLevel: 1,
-        //     zoomLevelDisplay: '100%',
-        //     dirPath: dirPath
-        //   },
-        //   () => window.scrollTo(0, 0)
-        // );
-      }
-    });
+      webFrame.clearCache();
+      dispatch({ type: CHANGE_ZOOM, zoom: { actual: 1, display: '100%' } });
+      dispatch({ type: OPEN_DIR, directory: directory[0] });
+      dispatch({ type: SET_DIR_CONTENT, content });
+      window.scrollTo(0, 0);
+    }
   };
 
   return (
@@ -86,7 +81,6 @@ const Toolbar = () => {
           <button type='button' className='btn btn-primary btn-xs' onClick={() => openDir()}>
             <FontAwesomeIcon icon={faFolderOpen} />
           </button>
-          {/* <input type='file' ref={inputFile} style={{ display: 'none' }} webkitdirectory='true'></input> */}
         </div>
         <div className='btn-group mr-2'>
           <button type='button' className='btn btn-primary btn-xs' onClick={() => minus()} disabled={isMinZoom(zoom)}>
@@ -108,7 +102,7 @@ const Toolbar = () => {
                   key={index}
                   className={zoomLevelOption.display === display ? 'dropdown-item active' : 'dropdown-item'}
                   onClick={() => setZoomTo(zoomLevelOption)}
-                  href='#'>
+                  href='/#'>
                   {zoomLevelOption.display}
                 </a>
               ))}
