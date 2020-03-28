@@ -18,13 +18,14 @@ const Image = ({ src, last }) => {
   const dimension = sizeOf(src);
   const alt = path.basename(src);
   const heightToWidthProportion = dimension.height / dimension.width;
+  const widthThreshold = document.body.clientWidth - 69;
   const width =
-    dimension.width > document.body.clientWidth
-      ? new Decimal(document.body.clientWidth - 69).mul(new Decimal(zoom)).toNumber()
+    dimension.width > widthThreshold
+      ? new Decimal(widthThreshold).mul(new Decimal(zoom)).toNumber()
       : new Decimal(dimension.width).mul(new Decimal(zoom)).toNumber();
   const height =
-    dimension.width > document.body.clientWidth
-      ? new Decimal(heightToWidthProportion * (document.body.clientWidth - 69)).mul(new Decimal(zoom)).toNumber()
+    dimension.width > widthThreshold
+      ? new Decimal(heightToWidthProportion * widthThreshold).mul(new Decimal(zoom)).toNumber()
       : new Decimal(dimension.height).mul(new Decimal(zoom)).toNumber();
 
   return (
