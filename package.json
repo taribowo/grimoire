@@ -17,7 +17,7 @@
     "electron-devtools-installer": "^2.2.4",
     "electron-serve": "^0.4.1",
     "image-size": "^0.8.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mousetrap": "^1.6.5",
     "node-sass": "^4.13.1",
     "popper.js": "^1.16.1",
